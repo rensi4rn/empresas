@@ -1,7 +1,11 @@
-CREATE OR REPLACE FUNCTION "dir"."ft_empresa_sel"(	
-				p_administrador integer, p_id_usuario integer, p_tabla character varying, p_transaccion character varying)
-RETURNS character varying AS
-$BODY$
+CREATE OR REPLACE FUNCTION dir.ft_empresa_sel (
+  p_administrador integer,
+  p_id_usuario integer,
+  p_tabla varchar,
+  p_transaccion varchar
+)
+RETURNS varchar AS
+$body$
 /**************************************************************************
  SISTEMA:		Sistema de Empresas
  FUNCION: 		dir.ft_empresa_sel
@@ -45,9 +49,11 @@ BEGIN
 						empr.estado_reg,
 						empr.nombre,
 						empr.domicilio,
-						empr.id_lugar,
+						lug.nombre as lugar,
 						empr.actividad,
-						empr.id_actividad,
+						gral.nombre as actividad_gral,
+                        prim.nombre as actividad_prim,
+						esp.nombre as actividad_esp,
 						empr.nit,
 						empr.email,
 						empr.matricula,
@@ -61,7 +67,11 @@ BEGIN
 						from dir.tempresa empr
 						inner join segu.tusuario usu1 on usu1.id_usuario = empr.id_usuario_reg
 						left join segu.tusuario usu2 on usu2.id_usuario = empr.id_usuario_mod
-				        where  ';
+				        inner join param.tlugar lug on lug.id_lugar = empr.id_lugar
+                        inner join dir.tactividad esp on esp.id_actividad=empr.id_actividad
+						inner join dir.tactividad prim on prim.id_actividad=esp.id_actividad_fk
+                        inner join dir.tactividad gral on gral.id_actividad=prim.id_actividad_fk
+                        where  ';
 			
 			--Definicion de la respuesta
 			v_consulta:=v_consulta||v_parametros.filtro;
@@ -87,7 +97,11 @@ BEGIN
 					    from dir.tempresa empr
 					    inner join segu.tusuario usu1 on usu1.id_usuario = empr.id_usuario_reg
 						left join segu.tusuario usu2 on usu2.id_usuario = empr.id_usuario_mod
-					    where ';
+					    inner join param.tlugar lug on lug.id_lugar = empr.id_lugar
+                        inner join dir.tactividad esp on esp.id_actividad=empr.id_actividad
+						inner join dir.tactividad prim on prim.id_actividad=esp.id_actividad_fk
+                        inner join dir.tactividad gral on gral.id_actividad=prim.id_actividad_fk
+                        where ';
 			
 			--Definicion de la respuesta		    
 			v_consulta:=v_consulta||v_parametros.filtro;
@@ -112,7 +126,9 @@ EXCEPTION
 			v_resp = pxp.f_agrega_clave(v_resp,'procedimientos',v_nombre_funcion);
 			raise exception '%',v_resp;
 END;
-$BODY$
-LANGUAGE 'plpgsql' VOLATILE
+$body$
+LANGUAGE 'plpgsql'
+VOLATILE
+CALLED ON NULL INPUT
+SECURITY INVOKER
 COST 100;
-ALTER FUNCTION "dir"."ft_empresa_sel"(integer, integer, character varying, character varying) OWNER TO postgres;

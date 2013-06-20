@@ -24,9 +24,11 @@ class MODEmpresa extends MODbase{
 		$this->captura('estado_reg','varchar');
 		$this->captura('nombre','varchar');
 		$this->captura('domicilio','text');
-		$this->captura('id_lugar','int4');
+		$this->captura('lugar','varchar');
 		$this->captura('actividad','text');
-		$this->captura('id_actividad','int4');
+		$this->captura('actividad_gral','varchar');
+		$this->captura('actividad_prim','varchar');
+		$this->captura('actividad_esp','varchar');
 		$this->captura('nit','varchar');
 		$this->captura('email','varchar');
 		$this->captura('matricula','int8');
@@ -56,9 +58,9 @@ class MODEmpresa extends MODbase{
 		$this->setParametro('estado_reg','estado_reg','varchar');
 		$this->setParametro('nombre','nombre','varchar');
 		$this->setParametro('domicilio','domicilio','text');
-		$this->setParametro('id_lugar','id_lugar','int4');
+		$this->setParametro('lugar','lugar','varchar');
 		$this->setParametro('actividad','actividad','text');
-		$this->setParametro('id_actividad','id_actividad','int4');
+		$this->setParametro('id_actividad_esp','id_actividad_esp','int4');
 		$this->setParametro('nit','nit','varchar');
 		$this->setParametro('email','email','varchar');
 		$this->setParametro('matricula','matricula','int8');
@@ -83,9 +85,9 @@ class MODEmpresa extends MODbase{
 		$this->setParametro('estado_reg','estado_reg','varchar');
 		$this->setParametro('nombre','nombre','varchar');
 		$this->setParametro('domicilio','domicilio','text');
-		$this->setParametro('id_lugar','id_lugar','int4');
+		$this->setParametro('lugar','lugar','varchar');
 		$this->setParametro('actividad','actividad','text');
-		$this->setParametro('id_actividad','id_actividad','int4');
+		$this->setParametro('id_actividad_esp','id_actividad_esp','int4');
 		$this->setParametro('nit','nit','varchar');
 		$this->setParametro('email','email','varchar');
 		$this->setParametro('matricula','matricula','int8');

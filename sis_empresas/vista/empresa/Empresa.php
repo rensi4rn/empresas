@@ -17,7 +17,7 @@ Phx.vista.Empresa=Ext.extend(Phx.gridInterfaz,{
     	//llama al constructor de la clase padre
 		Phx.vista.Empresa.superclass.constructor.call(this,config);
 		this.init();
-		//this.load({params:{start:0, limit:this.tam_pag}});		
+		this.load({params:{start:0, limit:this.tam_pag}});		
 		this.getComponente('id_actividad_gral').on('select', this.onActividadGralSelect, this);
 		this.getComponente('id_actividad_prim').on('select', this.onActividadPrimSelect, this);
 	},
@@ -65,36 +65,28 @@ Phx.vista.Empresa=Ext.extend(Phx.gridInterfaz,{
 			form:true
 		},
 		{
-			config:{
-				name: 'id_lugar',
-				fieldLabel: 'id_lugar',
-				allowBlank: true,
-				anchor: '80%',
-				gwidth: 100,
-				maxLength:4
-			},
-			type:'NumberField',
-			filters:{pfiltro:'empr.id_lugar',type:'numeric'},
-			id_grupo:1,
-			grid:true,
-			form:true
-		},
-		/*
-		{
-			config:{
-				name: 'id_actividad',
-				fieldLabel: 'Actividad General',
-				allowBlank: true,
-				anchor: '80%',
-				gwidth: 100,
-				maxLength:4
-			},
-			type:'NumberField',
-			filters:{pfiltro:'empr.id_actividad',type:'numeric'},
-			id_grupo:1,
-			grid:true,
-			form:true
-		},*/
+	   config:{
+	       name:'lugar',
+	       fieldLabel: 'Lugar',
+	       emptyText : 'Lugar...',
+				    allowBlank: false,
+							 typeAhead: true,
+	       triggerAction: 'all',
+	       anchor: '80%',
+  		    lazyRender:true,
+  		    mode: 'local',
+  		    store:['Beni', 'Chuquisaca', 'Cochabamba', 'La Paz', 'Oruro', 
+  		    							'Pando', 'Potosi', 'Santa Cruz', 'Tarija']
+  		},
+  		type:'ComboBox',
+  		id_grupo:0,
+  		filters : {
+          pfiltro : 'lug.nombre',
+          type : 'string'
+    },
+  		grid:true,
+    form:true
+	 },
 		{
       config : {
           name : 'id_actividad_gral',
@@ -118,7 +110,7 @@ Phx.vista.Empresa=Ext.extend(Phx.gridInterfaz,{
           }),
           valueField : 'id_actividad',
           displayField : 'nombre',
-          gdisplayField : 'nombre_almacen',
+          gdisplayField : 'actividad_gral',
           hiddenName : 'id_actividad_gral',
           forceSelection : true,
           typeAhead : false,
@@ -131,33 +123,18 @@ Phx.vista.Empresa=Ext.extend(Phx.gridInterfaz,{
           gwidth : 150,
           minChars : 2,
           renderer : function(value, p, record) {
-              return String.format('{0}', record.data['nombre_almacen']);
+              return String.format('{0}', record.data['actividad_gral']);
           }
       },
       type : 'ComboBox',
       id_grupo : 0,
       filters : {
-          pfiltro : 'almo.nombre',
+          pfiltro : 'gral.nombre',
           type : 'string'
       },
-      grid : false,
+      grid : true,
       form : true
-  },/*
-		{
-			config:{
-				name: 'id_actividad',
-				fieldLabel: 'Actividad primaria',
-				allowBlank: true,
-				anchor: '80%',
-				gwidth: 100,
-				maxLength:4
-			},
-			type:'NumberField',
-			filters:{pfiltro:'empr.id_actividad',type:'numeric'},
-			id_grupo:1,
-			grid:true,
-			form:true
-		},*/
+  },
 		{
       config : {
           name : 'id_actividad_prim',
@@ -182,7 +159,7 @@ Phx.vista.Empresa=Ext.extend(Phx.gridInterfaz,{
           //tpl : '<tpl for="."><div class="x-combo-list-item"><p>Cuenta: {cuenta}</p><p>Nombre: {desc_person}</p></div></tpl>',
           valueField : 'id_actividad',
           displayField : 'nombre',
-          gdisplayField : 'nombre_usuario',
+          gdisplayField : 'actividad_prim',
           hiddenName : 'id_actividad_prim',
           forceSelection : true,
           typeAhead : true,
@@ -194,34 +171,18 @@ Phx.vista.Empresa=Ext.extend(Phx.gridInterfaz,{
           anchor : '80%',
           minChars : 2,
           renderer : function(value, p, record) {
-              return String.format('{0}', record.data['nombre_usuario']);
+              return String.format('{0}', record.data['actividad_prim']);
           },
       },
       type : 'ComboBox',
       id_grupo : 0,
       filters : {
-          pfiltro : 'usuinv.cuenta',
+          pfiltro : 'prim.nombre',
           type : 'string'
       },
-      grid : false,
+      grid : true,
       form : true
   },
-  /*
-		{
-			config:{
-				name: 'id_actividad',
-				fieldLabel: 'Actividad especifica',
-				allowBlank: true,
-				anchor: '80%',
-				gwidth: 100,
-				maxLength:4
-			},
-			type:'NumberField',
-			filters:{pfiltro:'empr.id_actividad',type:'numeric'},
-			id_grupo:1,
-			grid:true,
-			form:true
-		},*/
 		{
       config : {
           name : 'id_actividad_esp',
@@ -246,7 +207,7 @@ Phx.vista.Empresa=Ext.extend(Phx.gridInterfaz,{
           //tpl : '<tpl for="."><div class="x-combo-list-item"><p>Cuenta: {cuenta}</p><p>Nombre: {desc_person}</p></div></tpl>',
           valueField : 'id_actividad',
           displayField : 'nombre',
-          gdisplayField : 'nombre_usuario',
+          gdisplayField : 'actividad_esp',
           hiddenName : 'id_actividad_esp',
           forceSelection : true,
           typeAhead : true,
@@ -258,16 +219,16 @@ Phx.vista.Empresa=Ext.extend(Phx.gridInterfaz,{
           anchor : '80%',
           minChars : 2,
           renderer : function(value, p, record) {
-              return String.format('{0}', record.data['nombre_usuario']);
+              return String.format('{0}', record.data['actividad_esp']);
           },
       },
       type : 'ComboBox',
       id_grupo : 0,
       filters : {
-          pfiltro : 'usuinv.cuenta',
+          pfiltro : 'esp.nombre',
           type : 'string'
       },
-      grid : false,
+      grid : true,
       form : true
   },		
 		{
@@ -277,7 +238,7 @@ Phx.vista.Empresa=Ext.extend(Phx.gridInterfaz,{
 				allowBlank: true,
 				anchor: '80%',
 				gwidth: 100,
-				maxLength:-5
+				maxLength:200
 			},
 			type:'TextField',
 			filters:{pfiltro:'empr.actividad',type:'string'},
@@ -322,7 +283,7 @@ Phx.vista.Empresa=Ext.extend(Phx.gridInterfaz,{
 				allowBlank: true,
 				anchor: '80%',
 				gwidth: 100,
-				maxLength:-5
+				maxLength:200
 			},
 			type:'TextField',
 			filters:{pfiltro:'empr.domicilio',type:'string'},
@@ -434,9 +395,11 @@ Phx.vista.Empresa=Ext.extend(Phx.gridInterfaz,{
 		{name:'estado_reg', type: 'string'},
 		{name:'nombre', type: 'string'},
 		{name:'domicilio', type: 'string'},
-		{name:'id_lugar', type: 'numeric'},
+		{name:'lugar', type: 'string'},
 		{name:'actividad', type: 'string'},
-		{name:'id_actividad', type: 'numeric'},
+		{name:'actividad_gral', type: 'string'},
+		{name:'actividad_prim', type: 'string'},
+		{name:'actividad_esp', type: 'string'},
 		{name:'nit', type: 'string'},
 		{name:'email', type: 'string'},
 		{name:'matricula', type: 'string'},
@@ -457,8 +420,10 @@ Phx.vista.Empresa=Ext.extend(Phx.gridInterfaz,{
 	bsave:true,
 	
 	onActividadGralSelect : function(e,b,c){
-            this.getComponente('id_actividad_prim').enable();
-            this.getComponente('id_actividad_prim').reset();
+            this.getComponente('id_actividad_prim').enable();           
+            this.getComponente('id_actividad_prim').reset();            
+            this.getComponente('id_actividad_esp').disable();
+            this.getComponente('id_actividad_esp').reset();
             this.getComponente('id_actividad_prim').lastQuery = null;
             this.getComponente('id_actividad_prim').store.baseParams.id_actividad_gral = e.value;
  },
@@ -468,7 +433,30 @@ Phx.vista.Empresa=Ext.extend(Phx.gridInterfaz,{
             this.getComponente('id_actividad_esp').reset();
             this.getComponente('id_actividad_esp').lastQuery = null;
             this.getComponente('id_actividad_esp').store.baseParams.id_actividad_prim = e.value;
- }
+ },
+ 
+ onButtonNew : function() {
+ 	 Phx.vista.Empresa.superclass.onButtonNew.call(this);
+			this.getComponente('id_actividad_prim').disable();
+			this.getComponente('id_actividad_esp').disable();
+		}
+		/*
+		onButtonEdit : function() {
+			var rec = this.sm.getSelected();
+			if (rec.data.estado == 'borrador') {
+				this.getComponente('id_almacen').enable();
+				this.getComponente('id_usuario_resp').enable();
+				this.getComponente('completo').enable();
+				this.getComponente('fecha_inv_planif').enable();
+				this.getComponente('observaciones').enable();
+			} else {
+				this.getComponente('id_almacen').disable();
+				this.getComponente('id_usuario_resp').disable();
+				this.getComponente('completo').disable();
+				this.getComponente('fecha_inv_planif').disable();
+				this.getComponente('observaciones').disable();
+			}
+		}*/
         
 }
 )

@@ -1,8 +1,11 @@
-CREATE OR REPLACE FUNCTION "dir"."ft_empresa_ime" (	
-				p_administrador integer, p_id_usuario integer, p_tabla character varying, p_transaccion character varying)
-RETURNS character varying AS
-$BODY$
-
+CREATE OR REPLACE FUNCTION dir.ft_empresa_ime (
+  p_administrador integer,
+  p_id_usuario integer,
+  p_tabla varchar,
+  p_transaccion varchar
+)
+RETURNS varchar AS
+$body$
 /**************************************************************************
  SISTEMA:		Sistema de Empresas
  FUNCION: 		dir.ft_empresa_ime
@@ -27,6 +30,7 @@ DECLARE
 	v_nombre_funcion        text;
 	v_mensaje_error         text;
 	v_id_empresa	integer;
+    v_id_lugar				integer;
 			    
 BEGIN
 
@@ -43,6 +47,11 @@ BEGIN
 	if(p_transaccion='DIR_EMPR_INS')then
 					
         begin
+        
+        	select id_lugar	into v_id_lugar
+            from param.tlugar 
+            where nombre=v_parametros.lugar;	
+        
         	--Sentencia de la insercion
         	insert into dir.tempresa(
 			estado_reg,
@@ -63,9 +72,9 @@ BEGIN
 			'activo',
 			v_parametros.nombre,
 			v_parametros.domicilio,
-			v_parametros.id_lugar,
+			v_id_lugar,
 			v_parametros.actividad,
-			v_parametros.id_actividad,
+			v_parametros.id_actividad_esp,
 			v_parametros.nit,
 			v_parametros.email,
 			v_parametros.matricula,
@@ -96,13 +105,17 @@ BEGIN
 	elsif(p_transaccion='DIR_EMPR_MOD')then
 
 		begin
+        	select id_lugar	into v_id_lugar
+            from param.tlugar 
+            where nombre=v_parametros.lugar;
+            
 			--Sentencia de la modificacion
 			update dir.tempresa set
 			nombre = v_parametros.nombre,
 			domicilio = v_parametros.domicilio,
-			id_lugar = v_parametros.id_lugar,
+			id_lugar = v_id_lugar,
 			actividad = v_parametros.actividad,
-			id_actividad = v_parametros.id_actividad,
+			id_actividad = v_parametros.id_actividad_esp,
 			nit = v_parametros.nit,
 			email = v_parametros.email,
 			matricula = v_parametros.matricula,
@@ -159,7 +172,9 @@ EXCEPTION
 		raise exception '%',v_resp;
 				        
 END;
-$BODY$
-LANGUAGE 'plpgsql' VOLATILE
+$body$
+LANGUAGE 'plpgsql'
+VOLATILE
+CALLED ON NULL INPUT
+SECURITY INVOKER
 COST 100;
-ALTER FUNCTION "dir"."ft_empresa_ime"(integer, integer, character varying, character varying) OWNER TO postgres;
