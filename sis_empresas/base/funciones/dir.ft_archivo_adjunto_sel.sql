@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION dir.ft_plantilla_correo_sel (
+CREATE OR REPLACE FUNCTION dir.ft_archivo_adjunto_sel (
   p_administrador integer,
   p_id_usuario integer,
   p_tabla varchar,
@@ -8,10 +8,10 @@ RETURNS varchar AS
 $body$
 /**************************************************************************
  SISTEMA:		Sistema de Empresas
- FUNCION: 		dir.ft_plantilla_correo_sel
- DESCRIPCION:   Funcion que devuelve conjuntos de registros de las consultas relacionadas con la tabla 'dir.tplantilla_correo'
+ FUNCION: 		dir.ft_archivo_adjunto_sel
+ DESCRIPCION:   Funcion que devuelve conjuntos de registros de las consultas relacionadas con la tabla 'dir.tarchivo_adjunto'
  AUTOR: 		 (admin)
- FECHA:	        24-06-2013 21:08:35
+ FECHA:	        25-06-2013 01:10:51
  COMENTARIOS:	
 ***************************************************************************
  HISTORIAL DE MODIFICACIONES:
@@ -30,35 +30,37 @@ DECLARE
 			    
 BEGIN
 
-	v_nombre_funcion = 'dir.ft_plantilla_correo_sel';
+	v_nombre_funcion = 'dir.ft_archivo_adjunto_sel';
     v_parametros = pxp.f_get_record(p_tabla);
 
 	/*********************************    
- 	#TRANSACCION:  'DIR_PLCR_SEL'
+ 	#TRANSACCION:  'DIR_ARCADJ_SEL'
  	#DESCRIPCION:	Consulta de datos
  	#AUTOR:		admin	
- 	#FECHA:		24-06-2013 21:08:35
+ 	#FECHA:		25-06-2013 01:10:51
 	***********************************/
 
-	if(p_transaccion='DIR_PLCR_SEL')then
+	if(p_transaccion='DIR_ARCADJ_SEL')then
      				
     	begin
     		--Sentencia de la consulta
 			v_consulta:='select
-						plcr.id_plantilla_correo,
-						plcr.estado_reg,
-						plcr.body,
-						plcr.codigo,
-                        plcr.fecha_reg,
-						plcr.id_usuario_reg,
-						plcr.id_usuario_mod,
-						plcr.fecha_mod,
+						arcadj.id_archivo_adjunto,
+						arcadj.id_plantilla_correo,
+						arcadj.estado_reg,
+						arcadj.archivo,
+						arcadj.extension_archivo,
+						arcadj.nombre_archivo,
+						arcadj.fecha_reg,
+						arcadj.id_usuario_reg,
+						arcadj.id_usuario_mod,
+						arcadj.fecha_mod,
 						usu1.cuenta as usr_reg,
 						usu2.cuenta as usr_mod	
-						from dir.tplantilla_correo plcr
-						inner join segu.tusuario usu1 on usu1.id_usuario = plcr.id_usuario_reg
-						left join segu.tusuario usu2 on usu2.id_usuario = plcr.id_usuario_mod
-				        where  ';
+						from dir.tarchivo_adjunto arcadj
+						inner join segu.tusuario usu1 on usu1.id_usuario = arcadj.id_usuario_reg
+						left join segu.tusuario usu2 on usu2.id_usuario = arcadj.id_usuario_mod
+				        where id_plantilla_correo='||v_parametros.id_plantilla_correo||' and ';
 			
 			--Definicion de la respuesta
 			v_consulta:=v_consulta||v_parametros.filtro;
@@ -70,21 +72,21 @@ BEGIN
 		end;
 
 	/*********************************    
- 	#TRANSACCION:  'DIR_PLCR_CONT'
+ 	#TRANSACCION:  'DIR_ARCADJ_CONT'
  	#DESCRIPCION:	Conteo de registros
  	#AUTOR:		admin	
- 	#FECHA:		24-06-2013 21:08:35
+ 	#FECHA:		25-06-2013 01:10:51
 	***********************************/
 
-	elsif(p_transaccion='DIR_PLCR_CONT')then
+	elsif(p_transaccion='DIR_ARCADJ_CONT')then
 
 		begin
 			--Sentencia de la consulta de conteo de registros
-			v_consulta:='select count(id_plantilla_correo)
-					    from dir.tplantilla_correo plcr
-					    inner join segu.tusuario usu1 on usu1.id_usuario = plcr.id_usuario_reg
-						left join segu.tusuario usu2 on usu2.id_usuario = plcr.id_usuario_mod
-					    where ';
+			v_consulta:='select count(id_archivo_adjunto)
+					    from dir.tarchivo_adjunto arcadj
+					    inner join segu.tusuario usu1 on usu1.id_usuario = arcadj.id_usuario_reg
+						left join segu.tusuario usu2 on usu2.id_usuario = arcadj.id_usuario_mod
+					    where id_plantilla_correo='||v_parametros.id_plantilla_correo||' and ';
 			
 			--Definicion de la respuesta		    
 			v_consulta:=v_consulta||v_parametros.filtro;

@@ -1,8 +1,8 @@
 <?php
 /**
 *@package pXP
-*@file gen-PlantillaCorreo.php
-*@author  (admin)
+*@file PlantillaCorreo.php
+*@author  Gonzalo Sarmiento Sejas
 *@date 24-06-2013 21:08:35
 *@description Archivo con la interfaz de usuario que permite la ejecucion de todas las funcionalidades del sistema
 */
@@ -17,7 +17,23 @@ Phx.vista.PlantillaCorreo=Ext.extend(Phx.gridInterfaz,{
     	//llama al constructor de la clase padre
 		Phx.vista.PlantillaCorreo.superclass.constructor.call(this,config);
 		this.init();
-		this.load({params:{start:0, limit:this.tam_pag}})
+		this.load({params:{start:0, limit:this.tam_pag}});
+		this.addButton('btnUpload', {
+				text : 'Adjuntar archivo',
+				iconCls : 'bupload1',
+				disabled : true,
+				handler : onBtnUpload,
+				tooltip : '<b>Upload</b><br/>Subir Archivo'
+			});
+			
+			function onBtnUpload() {
+				var rec = this.sm.getSelected();
+				Phx.CP.loadWindows('../../../sis_empresas/vista/archivo_adjunto/SubirArchivo.php', 'Subir Archivo', {
+					modal : true,
+					width : 450,
+					height : 150
+				}, rec.data, this.idContenedor, 'SubirArchivo')
+			}
 	},
 	tam_pag:50,
 			
@@ -33,31 +49,11 @@ Phx.vista.PlantillaCorreo=Ext.extend(Phx.gridInterfaz,{
 			form:true 
 		},
 		{
-			//configuracion del componente
-			config:{
-					labelSeparator:'',
-					inputType:'hidden',
-					name: 'nombre_archivo'
-			},
-			type:'Field',
-			form:true 
-		},
-		{
-			//configuracion del componente
-			config:{
-					labelSeparator:'',
-					inputType:'hidden',
-					name: 'extension_archivo'
-			},
-			type:'Field',
-			form:true 
-		},
-		{
 			config:{
 				name: 'codigo',
 				fieldLabel: 'Codigo',
 				allowBlank: false,
-				anchor: '80%',
+				anchor: '90%',
 				gwidth: 100,
 				maxLength: 20
 			},
@@ -66,22 +62,7 @@ Phx.vista.PlantillaCorreo=Ext.extend(Phx.gridInterfaz,{
 			id_grupo:1,
 			grid:true,
 			form:true
-		},/*
-		{
-			config:{
-				name: 'body',
-				fieldLabel: 'Mensaje',
-				allowBlank: true,
-				anchor: '80%',
-				gwidth: 100,
-				maxLength:-5
-			},
-			type:'TextField',
-			filters:{pfiltro:'plcr.body',type:'string'},
-			id_grupo:1,
-			grid:true,
-			form:true
-		},*/
+		},
 		{
 			config:{
 				name: 'body',
@@ -89,47 +70,11 @@ Phx.vista.PlantillaCorreo=Ext.extend(Phx.gridInterfaz,{
 				anchor: '90%'
 			},
 			type:'HtmlEditor',
-			filters:{pfiltro:'pltcor.body',type:'string'},
+			filters:{pfiltro:'plcr.body',type:'string'},
 			id_grupo:1,
 			grid:true,
 			form:true
 		},
-		{
-			config : {
-				fieldLabel : 'Archivos Adjunto',
-				gwidth : 130,
-				inputType : 'file',
-				name : 'archivos_adjunto',
-				buttonText : '',
-				maxLength : 150,
-				anchor : '100%',
-				
-				renderer : function(value, p, record) {
-					if (value != '')
-						 return String.format('{0}', "<div style='text-align:center'><a href = '../../../sis_empresas/archivos/" + record.data['nombre_archivo'] +  '.' + record.data['extension_archivo'] + "' align='center' width='70' height='70'>documento</a></div>");
-				}
-			},
-			type : 'Field',
-			sortable : false,
-			id_grupo : 0,
-			grid : true,
-			form : false
-		},/*
-		{
-			config:{
-				name: 'archivos_adjunto',
-				fieldLabel: 'Archivos Adjunto',
-				allowBlank: true,
-				anchor: '80%',
-				gwidth: 100,
-				maxLength:-5
-			},
-			type:'TextField',
-			filters:{pfiltro:'plcr.archivos_adjunto',type:'string'},
-			id_grupo:1,
-			grid:true,
-			form:true
-		},*/
 		{
 			config:{
 				name: 'estado_reg',
@@ -220,9 +165,6 @@ Phx.vista.PlantillaCorreo=Ext.extend(Phx.gridInterfaz,{
 		{name:'estado_reg', type: 'string'},
 		{name:'body', type: 'string'},
 		{name:'codigo', type: 'string'},
-		{name:'nombre_archivo', type: 'string'},
-		{name:'extension_archivo', type: 'string'},
-		{name:'archivos_adjunto', type: 'string'},
 		{name:'fecha_reg', type: 'date',dateFormat:'Y-m-d H:i:s.u'},
 		{name:'id_usuario_reg', type: 'numeric'},
 		{name:'id_usuario_mod', type: 'numeric'},
@@ -235,8 +177,22 @@ Phx.vista.PlantillaCorreo=Ext.extend(Phx.gridInterfaz,{
 		field: 'id_plantilla_correo',
 		direction: 'ASC'
 	},
+	south : {
+			url : '../../../sis_empresas/vista/archivo_adjunto/ArchivoAdjunto.php',
+			title : 'Archivos Adjuntados',
+			height: '50%',
+			cls : 'ArchivoAdjunto'
+		},
 	bdel:true,
-	bsave:true
+	bsave:true,
+	preparaMenu : function(tb) {
+			Phx.vista.PlantillaCorreo.superclass.preparaMenu.call(this, tb)
+			this.getBoton('btnUpload').enable();
+		},
+		liberaMenu : function(tb) {
+			Phx.vista.PlantillaCorreo.superclass.liberaMenu.call(this, tb)
+			this.getBoton('btnUpload').disable();
+		}
 	}
 )
 </script>

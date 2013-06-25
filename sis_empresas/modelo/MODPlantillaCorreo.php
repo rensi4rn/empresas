@@ -1,8 +1,8 @@
 <?php
 /**
 *@package pXP
-*@file gen-MODPlantillaCorreo.php
-*@author  (admin)
+*@file MODPlantillaCorreo.php
+*@author  Gonzalo Sarmiento
 *@date 24-06-2013 21:08:35
 *@description Clase que envia los parametros requeridos a la Base de datos para la ejecucion de las funciones, y que recibe la respuesta del resultado de la ejecucion de las mismas
 */
@@ -18,18 +18,12 @@ class MODPlantillaCorreo extends MODbase{
 		$this->procedimiento='dir.ft_plantilla_correo_sel';
 		$this->transaccion='DIR_PLCR_SEL';
 		$this->tipo_procedimiento='SEL';//tipo de transaccion
-		
-		$_SESSION["ARCHIVO"] = array();
 				
 		//Definicion de la lista del resultado del query
 		$this->captura('id_plantilla_correo','int4');
 		$this->captura('estado_reg','varchar');
 		$this->captura('body','text');
 		$this->captura('codigo','varchar');
-		$this->captura('nombre_archivo','varchar');
-		$this->captura('extension_archivo','varchar');
-		$this->captura('archivos_adjunto', 'bytea', 'nombre_archivo', 'extension_archivo', 'archivo', '../../../sis_empresas/archivos/');
-		//$this->captura('archivos_adjunto','bytea');
 		$this->captura('fecha_reg','timestamp');
 		$this->captura('id_usuario_reg','int4');
 		$this->captura('id_usuario_mod','int4');
@@ -40,7 +34,6 @@ class MODPlantillaCorreo extends MODbase{
 		//Ejecuta la instruccion
 		$this->armarConsulta();
 		$this->ejecutarConsulta();
-		
 		//Devuelve la respuesta
 		return $this->respuesta;
 	}
@@ -55,8 +48,7 @@ class MODPlantillaCorreo extends MODbase{
 		$this->setParametro('estado_reg','estado_reg','varchar');
 		$this->setParametro('body','body','codigo_html');
 		$this->setParametro('codigo','codigo','varchar');
-		//$this->setParametro('archivos_adjunto','archivos_adjunto','bytea',false,1024,true);
-
+		
 		//Ejecuta la instruccion
 		$this->armarConsulta();
 		$this->ejecutarConsulta();
@@ -74,10 +66,9 @@ class MODPlantillaCorreo extends MODbase{
 		//Define los parametros para la funcion
 		$this->setParametro('id_plantilla_correo','id_plantilla_correo','int4');
 		$this->setParametro('estado_reg','estado_reg','varchar');
-		$this->setParametro('body','body','text');
+		$this->setParametro('body','body','codigo_html');
 		$this->setParametro('codigo','codigo','varchar');
-		$this->setParametro('archivos_adjunto','archivos_adjunto','bytea');
-
+		
 		//Ejecuta la instruccion
 		$this->armarConsulta();
 		$this->ejecutarConsulta();

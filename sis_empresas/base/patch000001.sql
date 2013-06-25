@@ -67,17 +67,24 @@ WITHOUT OIDS;
 */
 /***********************************F-SCP-GSS-DIR-0-19/06/2013****************************************/
 
-/***********************************I-SCP-GSS-DIR-5-24/06/2013****************************************/
+/***********************************I-SCP-GSS-DIR-5-25/06/2013****************************************/
 
 CREATE TABLE dir.tplantilla_correo (
-  id_plantilla_correo SERIAL NOT NULL, 
-  codigo VARCHAR(10) NOT NULL, 
+  id_plantilla_correo SERIAL, 
+  codigo VARCHAR(20) NOT NULL, 
   body TEXT, 
-  archivos_adjunto BYTEA,
-  nombre_archivo VARCHAR(50), 
-  extension_archivo VARCHAR(10), 
   CONSTRAINT pk_tplantilla_correo__id_plantilla_correo PRIMARY KEY(id_plantilla_correo)
 ) INHERITS (pxp.tbase)
 WITHOUT OIDS;
 
-/***********************************F-SCP-GSS-DIR-5-24/06/2013****************************************/
+CREATE TABLE dir.tarchivo_adjunto (
+  id_archivo_adjunto SERIAL, 
+  id_plantilla_correo INTEGER,
+  archivo BYTEA, 
+  nombre_archivo VARCHAR(50), 
+  extension_archivo VARCHAR(10), 
+  CONSTRAINT pk_tarchivo_adjunto__id_archivo_adjunto PRIMARY KEY(id_archivo_adjunto)
+) INHERITS (pxp.tbase)
+WITHOUT OIDS;
+
+/***********************************F-SCP-GSS-DIR-5-25/06/2013****************************************/

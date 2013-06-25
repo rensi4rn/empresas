@@ -1,8 +1,8 @@
 <?php
 /**
 *@package pXP
-*@file gen-ACTPlantillaCorreo.php
-*@author  (admin)
+*@file ACTPlantillaCorreo.php
+*@author  Gonzalo Sarmiento Sejas
 *@date 24-06-2013 21:08:35
 *@description Clase que recibe los parametros enviados por la vista para mandar a la capa de Modelo
 */

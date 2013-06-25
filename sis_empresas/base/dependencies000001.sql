@@ -43,3 +43,14 @@ ALTER TABLE dir.tactividad
     NOT DEFERRABLE;
     
 /********************************************F-DEP-GSS-DIR-0-19/06/2013********************************************/
+
+/********************************************I-DEP-GSS-DIR-5-24/06/2013********************************************/
+
+ALTER TABLE dir.tarchivo_adjunto
+  ADD CONSTRAINT fk_tarchivo_adjunto__id_plantilla_correo FOREIGN KEY (id_plantilla_correo)
+    REFERENCES dir.tplantilla_correo(id_plantilla_correo)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION
+    NOT DEFERRABLE;
+    
+/********************************************F-DEP-GSS-DIR-5-24/06/2013********************************************/

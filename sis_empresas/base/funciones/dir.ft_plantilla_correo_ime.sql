@@ -1,8 +1,11 @@
-CREATE OR REPLACE FUNCTION "dir"."ft_plantilla_correo_ime" (	
-				p_administrador integer, p_id_usuario integer, p_tabla character varying, p_transaccion character varying)
-RETURNS character varying AS
-$BODY$
-
+CREATE OR REPLACE FUNCTION dir.ft_plantilla_correo_ime (
+  p_administrador integer,
+  p_id_usuario integer,
+  p_tabla varchar,
+  p_transaccion varchar
+)
+RETURNS varchar AS
+$body$
 /**************************************************************************
  SISTEMA:		Sistema de Empresas
  FUNCION: 		dir.ft_plantilla_correo_ime
@@ -48,7 +51,6 @@ BEGIN
 			estado_reg,
 			body,
 			codigo,
-			archivos_adjunto,
 			fecha_reg,
 			id_usuario_reg,
 			id_usuario_mod,
@@ -57,7 +59,6 @@ BEGIN
 			'activo',
 			v_parametros.body,
 			v_parametros.codigo,
-			v_parametros.archivos_adjunto,
 			now(),
 			p_id_usuario,
 			null,
@@ -88,7 +89,6 @@ BEGIN
 			update dir.tplantilla_correo set
 			body = v_parametros.body,
 			codigo = v_parametros.codigo,
-			archivos_adjunto = v_parametros.archivos_adjunto,
 			id_usuario_mod = p_id_usuario,
 			fecha_mod = now()
 			where id_plantilla_correo=v_parametros.id_plantilla_correo;
@@ -141,7 +141,9 @@ EXCEPTION
 		raise exception '%',v_resp;
 				        
 END;
-$BODY$
-LANGUAGE 'plpgsql' VOLATILE
+$body$
+LANGUAGE 'plpgsql'
+VOLATILE
+CALLED ON NULL INPUT
+SECURITY INVOKER
 COST 100;
-ALTER FUNCTION "dir"."ft_plantilla_correo_ime"(integer, integer, character varying, character varying) OWNER TO postgres;
