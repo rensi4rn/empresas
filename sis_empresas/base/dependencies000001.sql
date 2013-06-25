@@ -20,7 +20,7 @@ ALTER TABLE dir.tpublicidad
     ON DELETE NO ACTION
     ON UPDATE NO ACTION
     NOT DEFERRABLE;
-    
+/*    
 ALTER TABLE dir.tactividad_esp
   ADD CONSTRAINT fk_tactividad_esp__id_actividad_prim FOREIGN KEY (id_actividad_prim)
     REFERENCES dir.tactividad_prim(id_actividad_prim)
@@ -34,7 +34,7 @@ ALTER TABLE dir.tactividad_prim
     ON DELETE NO ACTION
     ON UPDATE NO ACTION
     NOT DEFERRABLE;
-
+*/
 ALTER TABLE dir.tactividad
   ADD CONSTRAINT fk_tactividad__id_actividad FOREIGN KEY (id_actividad_fk)
     REFERENCES dir.tactividad(id_actividad)

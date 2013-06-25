@@ -41,7 +41,7 @@ CREATE TABLE dir.tactividad (
   CONSTRAINT pk_tactividad__id_actividad PRIMARY KEY(id_actividad)
 ) INHERITS (pxp.tbase)
 WITHOUT OIDS;
-
+/*
 CREATE TABLE dir.tactividad_gral (
   id_actividad_gral SERIAL, 
   nombre VARCHAR, 
@@ -57,7 +57,6 @@ CREATE TABLE dir.tactividad_prim (
 ) INHERITS (pxp.tbase)
 WITHOUT OIDS;
 
-
 CREATE TABLE dir.tactividad_esp (
   id_actividad_esp SERIAL NOT NULL, 
   id_actividad_prim INTEGER, 
@@ -65,5 +64,20 @@ CREATE TABLE dir.tactividad_esp (
   CONSTRAINT pk_tactividad_esp__id_actividad_esp PRIMARY KEY(id_actividad_esp)
 ) INHERITS (pxp.tbase)
 WITHOUT OIDS;
-
+*/
 /***********************************F-SCP-GSS-DIR-0-19/06/2013****************************************/
+
+/***********************************I-SCP-GSS-DIR-5-24/06/2013****************************************/
+
+CREATE TABLE dir.tplantilla_correo (
+  id_plantilla_correo SERIAL NOT NULL, 
+  codigo VARCHAR(10) NOT NULL, 
+  body TEXT, 
+  archivos_adjunto BYTEA,
+  nombre_archivo VARCHAR(50), 
+  extension_archivo VARCHAR(10), 
+  CONSTRAINT pk_tplantilla_correo__id_plantilla_correo PRIMARY KEY(id_plantilla_correo)
+) INHERITS (pxp.tbase)
+WITHOUT OIDS;
+
+/***********************************F-SCP-GSS-DIR-5-24/06/2013****************************************/

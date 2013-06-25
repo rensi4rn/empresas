@@ -88,3 +88,23 @@ select pxp.f_insert_tprocedimiento_gui ('DIR_EMPR_ELI', 'EMPR', 'no');
 select pxp.f_insert_tprocedimiento_gui ('DIR_EMPR_SEL', 'EMPR', 'no');
 
 /***********************************F-DAT-GSS-DIR-0-20/06/2013*****************************************/
+
+/***********************************I-DAT-GSS-DIR-5-24/06/2013*****************************************/
+
+select pxp.f_insert_tgui ('Plantilla Correo', 'plantilla de correo', 'PLTCOR', 'si', 2, 'sis_empresas/vista/plantilla_correo/PlantillaCorreo.php', 3, '', 'PlantillaCorreo', 'DIR');
+select pxp.f_insert_testructura_gui ('PLTCOR', 'EMPPAR');
+
+select pxp.f_insert_tfuncion ('dir.ft_plantilla_correo_sel', 'Funcion para tabla     ', 'DIR');
+select pxp.f_insert_tfuncion ('dir.ft_plantilla_correo_ime', 'Funcion para tabla     ', 'DIR');
+select pxp.f_insert_tprocedimiento ('DIR_PLTCOR_SEL', 'Consulta de datos', 'si', '', '', 'dir.ft_plantilla_correo_sel');
+select pxp.f_insert_tprocedimiento ('DIR_PLTCOR_CONT', 'Conteo de registros', 'si', '', '', 'dir.ft_plantilla_correo_sel');
+select pxp.f_insert_tprocedimiento ('DIR_PLTCOR_INS', 'Insercion de registros', 'si', '', '', 'dir.ft_plantilla_correo_ime');
+select pxp.f_insert_tprocedimiento ('DIR_PLTCOR_MOD', 'Modificacion de registros', 'si', '', '', 'dir.ft_plantilla_correo_ime');
+select pxp.f_insert_tprocedimiento ('DIR_PLTCOR_ELI', 'Eliminacion de registros', 'si', '', '', 'dir.ft_plantilla_correo_ime');
+
+select pxp.f_insert_tprocedimiento_gui ('DIR_PLTCOR_INS', 'PLTCOR', 'no');
+select pxp.f_insert_tprocedimiento_gui ('DIR_PLTCOR_MOD', 'PLTCOR', 'no');
+select pxp.f_insert_tprocedimiento_gui ('DIR_PLTCOR_ELI', 'PLTCOR', 'no');
+select pxp.f_insert_tprocedimiento_gui ('DIR_PLTCOR_SEL', 'PLTCOR', 'no');
+
+/***********************************F-DAT-GSS-DIR-5-24/06/2013*****************************************/
