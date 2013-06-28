@@ -24,6 +24,9 @@ class MODPlantillaCorreo extends MODbase{
 		$this->captura('estado_reg','varchar');
 		$this->captura('body','text');
 		$this->captura('codigo','varchar');
+		$this->captura('remitente_nombre','varchar');
+		$this->captura('remitente_email','varchar');
+		$this->captura('asunto','varchar');
 		$this->captura('fecha_reg','timestamp');
 		$this->captura('id_usuario_reg','int4');
 		$this->captura('id_usuario_mod','int4');
@@ -48,6 +51,9 @@ class MODPlantillaCorreo extends MODbase{
 		$this->setParametro('estado_reg','estado_reg','varchar');
 		$this->setParametro('body','body','codigo_html');
 		$this->setParametro('codigo','codigo','varchar');
+		$this->setParametro('remitente_nombre','remitente_nombre','varchar');
+		$this->setParametro('remitente_email','remitente_email','varchar');
+		$this->setParametro('asunto','asunto','varchar');
 		
 		//Ejecuta la instruccion
 		$this->armarConsulta();
@@ -68,6 +74,9 @@ class MODPlantillaCorreo extends MODbase{
 		$this->setParametro('estado_reg','estado_reg','varchar');
 		$this->setParametro('body','body','codigo_html');
 		$this->setParametro('codigo','codigo','varchar');
+		$this->setParametro('remitente_nombre','remitente_nombre','varchar');
+		$this->setParametro('remitente_email','remitente_email','varchar');
+		$this->setParametro('asunto','asunto','varchar');
 		
 		//Ejecuta la instruccion
 		$this->armarConsulta();

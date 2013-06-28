@@ -22,7 +22,7 @@ class MODPublicidad extends MODbase{
 		//Definicion de la lista del resultado del query
 		$this->captura('id_publicidad','int4');
 		$this->captura('estado_reg','varchar');
-		$this->captura('tiempo','varchar');
+		$this->captura('tiempo','int4');
 		$this->captura('hora_envio','time');
 		$this->captura('id_lugar','int4');
 		$this->captura('lugar','varchar');
@@ -56,7 +56,7 @@ class MODPublicidad extends MODbase{
 				
 		//Define los parametros para la funcion
 		$this->setParametro('estado_reg','estado_reg','varchar');
-		$this->setParametro('tiempo','tiempo','varchar');
+		$this->setParametro('tiempo','tiempo','int4');
 		$this->setParametro('hora_envio','hora_envio','time');
 		$this->setParametro('lugar','lugar','varchar');
 		$this->setParametro('estado','estado','varchar');
@@ -82,7 +82,7 @@ class MODPublicidad extends MODbase{
 		//Define los parametros para la funcion
 		$this->setParametro('id_publicidad','id_publicidad','int4');
 		$this->setParametro('estado_reg','estado_reg','varchar');
-		$this->setParametro('tiempo','tiempo','varchar');
+		$this->setParametro('tiempo','tiempo','int4');
 		$this->setParametro('hora_envio','hora_envio','time');
 		$this->setParametro('lugar','lugar','varchar');
 		$this->setParametro('estado','estado','varchar');
@@ -125,7 +125,7 @@ class MODPublicidad extends MODbase{
 		//Definicion de la lista del resultado del query
 		$this->setParametro('id_publicidad','id_publicidad','int4');
 		
-		$this->captura('tiempo','varchar');
+		$this->captura('tiempo','int4');
 		$this->captura('hora_envio','time');
 		$this->captura('id_lugar','int4');
 		$this->captura('lugar','varchar');
@@ -136,7 +136,10 @@ class MODPublicidad extends MODbase{
 		$this->captura('id_plantilla_correo','int4');
 		$this->captura('plantilla_correo','varchar');
 		$this->captura('body','text');
-		$this->captura('fecha_mod','timestamp');
+		$this->captura('remitente_nombre','varchar');
+		$this->captura('remitente_email','varchar');
+		$this->captura('asunto','varchar');
+		$this->captura('fecha_ult_envio','timestamp');
 		
 		//Ejecuta la instruccion
 		$this->armarConsulta();

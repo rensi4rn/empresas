@@ -28,8 +28,8 @@ VALUES (1, NULL, E'2013-06-25 18:20:20.395', NULL, E'activo', 6, 5, E'cuatro', E
 
 /* Data for the 'dir.tplantilla_correo' table  (Records 1 - 1) */
 
-INSERT INTO dir.tplantilla_correo ("id_usuario_reg", "id_usuario_mod", "fecha_reg", "fecha_mod", "estado_reg", "id_plantilla_correo", "codigo", "body")
-VALUES (1, 1, E'2013-06-25 16:24:06.167', E'2013-06-26 17:28:00.605', E'activo', 1, E'CORREOMASIVO', E'hola<br>este es mi correo de prueba<br>visita:<br><a href=\"http://www.google.com\">www.google.com</a><br><br>pd correo​ esto esta bien ?<br><br><img class=\"decoded\" alt=\"http://ns2.elhacker.net/timofonica/fotos/animales/fotos-divertidas-animales.jpg\" src=\"http://ns2.elhacker.net/timofonica/fotos/animales/fotos-divertidas-animales.jpg\" height=\"104\" width=\"106\"><br>');
+INSERT INTO dir.tplantilla_correo ("id_usuario_reg", "id_usuario_mod", "fecha_reg", "fecha_mod", "estado_reg", "id_plantilla_correo", "codigo", "body", "remitente_nombre", "remitente_email", "asunto")
+VALUES (1, 1, E'2013-06-25 16:24:06.167', E'2013-06-28 11:21:45.757', E'activo', 1, E'CORREOMASIVO', E'hola<br>este es mi correo de prueba<br>visita:<br><a href=\"http://www.google.com\">www.google.com</a><br><br>pd correo​ esto esta bien ?<br><br><img class=\"decoded\" alt=\"http://ns2.elhacker.net/timofonica/fotos/animales/fotos-divertidas-animales.jpg\" src=\"http://ns2.elhacker.net/timofonica/fotos/animales/fotos-divertidas-animales.jpg\" height=\"104\" width=\"106\"><br>', E'Kplian', E'admin@kplian.com', E'Email de prueba');
 
 --EMPRESA
 

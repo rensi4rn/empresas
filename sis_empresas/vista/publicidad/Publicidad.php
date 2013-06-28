@@ -74,14 +74,14 @@ Phx.vista.Publicidad=Ext.extend(Phx.gridInterfaz,{
 		{
 			config:{
 				name: 'tiempo',
-				fieldLabel: 'Periodo',
+				fieldLabel: 'Periodo (en horas)',
 				allowBlank: true,
 				anchor: '80%',
 				gwidth: 100,
 				maxLength:10
 			},
-			type:'TextField',
-			filters:{pfiltro:'camp.tiempo',type:'string'},
+			type:'NumberField',
+			filters:{pfiltro:'camp.tiempo',type:'numeric'},
 			id_grupo:1,
 			grid:true,
 			form:true
@@ -331,7 +331,7 @@ Phx.vista.Publicidad=Ext.extend(Phx.gridInterfaz,{
 	fields: [
 		{name:'id_publicidad', type: 'numeric'},
 		{name:'estado_reg', type: 'string'},
-		{name:'tiempo', type: 'string'},
+		{name:'tiempo', type: 'numeric'},
 		{name:'hora_envio', type: 'string'},
 		{name:'id_lugar', type: 'numeric'},
 		{name:'lugar', type: 'string'},

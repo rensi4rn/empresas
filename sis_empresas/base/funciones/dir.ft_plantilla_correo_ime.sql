@@ -51,6 +51,9 @@ BEGIN
 			estado_reg,
 			body,
 			codigo,
+            remitente_nombre,
+            remitente_email,
+            asunto,
 			fecha_reg,
 			id_usuario_reg,
 			id_usuario_mod,
@@ -59,6 +62,9 @@ BEGIN
 			'activo',
 			v_parametros.body,
 			v_parametros.codigo,
+            v_parametros.remitente_nombre,
+            v_parametros.remitente_email,
+            v_parametros.asunto,
 			now(),
 			p_id_usuario,
 			null,
@@ -89,6 +95,9 @@ BEGIN
 			update dir.tplantilla_correo set
 			body = v_parametros.body,
 			codigo = v_parametros.codigo,
+            remitente_nombre = v_parametros.remitente_nombre,
+			remitente_email = v_parametros.remitente_email,
+            asunto = v_parametros.asunto,
 			id_usuario_mod = p_id_usuario,
 			fecha_mod = now()
 			where id_plantilla_correo=v_parametros.id_plantilla_correo;

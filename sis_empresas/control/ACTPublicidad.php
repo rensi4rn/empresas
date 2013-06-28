@@ -70,18 +70,20 @@ class ACTPublicidad extends ACTbase{
 		$publicidad=$this->res->getDatos();
 		
 		//añado el cuerpo del email
-		$body = $publicidad[0]['body'];
-		$mail->MsgHTML($body);
+		$mail->MsgHTML($publicidad[0]['body']);
+		//añado remitente
+		$mail->SetFrom($publicidad[0]['remitente_email'], $publicidad[0]['remitente_nombre']);
+		//añado asunto
+		$mail->Subject = $publicidad[0]['asunto'];
 		
 		//verifico si paso el intervalo de periodo entre envio de correos
 		$tiempo = $publicidad[0]['tiempo'];
-		$tiempoHoras = explode(' ', $tiempo);				
-		$start = strtotime($publicidad[0]['fecha_mod']);		
+		$start = strtotime($publicidad[0]['fecha_ult_envio']);		
 		$date=new DateTime();
 		$end = strtotime($date->format('Y-m-d H:i:s.u'));		
-		$interval = ($end - $start)/3600;
+		$interval = ($end - $start)/3600;		
 		
-		if($interval>$tiempoHoras){
+		if($interval>$tiempo){
 					//parametrizo cuantos registros voy a recuperar y desde donde		
 					$this->objParam->addParametroConsulta('ordenacion','nombre');
 					$this->objParam->addParametroConsulta('cantidad',$publicidad[0]['cantidad_publicidad']);		
@@ -103,10 +105,6 @@ class ACTPublicidad extends ACTbase{
 										//añado los archivos adjuntos
 										$mail->AddAttachment(dirname(__FILE__).'/../archivos/'.$adjuntos['archivo']);
 								}
-								
-								$mail->SetFrom('gonzalo@kplian.com', 'Gonzalo Sarmiento');
-								$mail->Subject = "PHPMailer Test Subject";
-								
 								
 								foreach ($listaCorreos->getDatos() as $destino) {
 									 
@@ -133,7 +131,9 @@ class ACTPublicidad extends ACTbase{
 													$this->res=$this->objFunc->avanzarPuntero($this->objParam);
 													echo "Correos enviados!";
 											}
-											$mail->ClearAddresses();			
+											$mail->ClearAddresses();
+											$this->correosExitos=0;
+											$this->correosFallidos=0;			
 								}	
 								$mail->SmtpClose();
 					 }

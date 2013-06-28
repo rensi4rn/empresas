@@ -65,6 +65,51 @@ Phx.vista.PlantillaCorreo=Ext.extend(Phx.gridInterfaz,{
 		},
 		{
 			config:{
+				name: 'remitente_nombre',
+				fieldLabel: 'Remitente',
+				allowBlank: true,
+				anchor: '90%',
+				gwidth: 100,
+				maxLength: 100
+			},
+			type:'TextField',
+			filters:{pfiltro:'plcr.remitente_nombre',type:'string'},
+			id_grupo:1,
+			grid:true,
+			form:true
+		},		
+		{
+			config:{
+				name: 'remitente_email',
+				fieldLabel: 'Email Remitente',
+				allowBlank: true,
+				anchor: '90%',
+				gwidth: 100,
+				maxLength: 100
+			},
+			type:'TextField',
+			filters:{pfiltro:'plcr.remitente_email',type:'string'},
+			id_grupo:1,
+			grid:true,
+			form:true
+		},		
+		{
+			config:{
+				name: 'asunto',
+				fieldLabel: 'Asunto',
+				allowBlank: true,
+				anchor: '90%',
+				gwidth: 100,
+				maxLength: 100
+			},
+			type:'TextField',
+			filters:{pfiltro:'plcr.asunto',type:'string'},
+			id_grupo:1,
+			grid:true,
+			form:true
+		},
+		{
+			config:{
 				name: 'body',
 				fieldLabel: 'Mensaje',
 				anchor: '90%'
@@ -165,6 +210,9 @@ Phx.vista.PlantillaCorreo=Ext.extend(Phx.gridInterfaz,{
 		{name:'estado_reg', type: 'string'},
 		{name:'body', type: 'string'},
 		{name:'codigo', type: 'string'},
+		{name:'remitente_nombre', type: 'string'},
+		{name:'remitente_email', type: 'string'},
+		{name:'asunto', type: 'string'},
 		{name:'fecha_reg', type: 'date',dateFormat:'Y-m-d H:i:s.u'},
 		{name:'id_usuario_reg', type: 'numeric'},
 		{name:'id_usuario_mod', type: 'numeric'},

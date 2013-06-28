@@ -105,8 +105,11 @@ BEGIN
 						camp.cantidad_publicidad,
 						camp.id_plantilla_correo,
                         plt.codigo as plantilla_correo,
-                        plt.body,
-                        camp.fecha_mod
+                        plt.body,                        
+                        plt.remitente_nombre,
+                        plt.remitente_email,
+                        plt.asunto,
+                        camp.fecha_ult_envio
 						from dir.tpublicidad camp
 						left join param.tlugar lug on lug.id_lugar = camp.id_lugar
                         left join dir.tactividad act on act.id_actividad=camp.id_actividad

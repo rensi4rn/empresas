@@ -131,8 +131,8 @@ BEGIN
 		end;
 	
     /*********************************    
- 	#TRANSACCION:  'DIR_CAMP_MOD'
- 	#DESCRIPCION:	Modificacion de registros
+ 	#TRANSACCION:  'DIR_AVACAMP_MOD'
+ 	#DESCRIPCION:	Avanza puntero
  	#AUTOR:		Gonzalo Sarmiento Sejas	
  	#FECHA:		25-06-2013 21:50:18
 	***********************************/
@@ -148,10 +148,9 @@ BEGIN
 			update dir.tpublicidad set
 			estado = 'en proceso',
 			puntero_publicidad = puntero_publicidad+1,
-			fecha_mod = now(),
-			id_usuario_mod = p_id_usuario,
-            correos_exitos = v_parametros.correos_exitos,
-            correos_fallidos = v_parametros.correos_fallidos
+			fecha_ult_envio = now(),
+            correos_exitos = correos_exitos+v_parametros.correos_exitos,
+            correos_fallidos = correos_fallidos+v_parametros.correos_fallidos
 			where id_publicidad=v_parametros.id_publicidad;
                
 			--Definicion de la respuesta
