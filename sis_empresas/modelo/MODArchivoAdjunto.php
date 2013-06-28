@@ -124,6 +124,27 @@ class MODArchivoAdjunto extends MODbase{
 				//Devuelve la respuesta
 			 return $this->respuesta;
  }
+	
+	function listarArchivoAdjuntoCampania(){
+		//Definicion de variables para ejecucion del procedimientp
+		$this->procedimiento='dir.ft_archivo_adjunto_sel';
+		$this->transaccion='DIR_CAMPAR_SEL';
+		$this->tipo_procedimiento='SEL';//tipo de transaccion
+		$this->setCount(false);
+				
+		//Definicion de la lista del resultado del query
+		$this->setParametro('id_publicidad','id_publicidad','int4');
+		$this->captura('archivo', 'bytea', 'nombre_archivo', 'extension_archivo', 'archivo', '../../../sis_empresas/archivos/');
+		$this->captura('extension_archivo','varchar');
+		$this->captura('nombre_archivo','varchar');
+		
+		//Ejecuta la instruccion
+		$this->armarConsulta();
+		$this->ejecutarConsulta();
+		
+		//Devuelve la respuesta
+		return $this->respuesta;
+	}
 			
 }
 ?>

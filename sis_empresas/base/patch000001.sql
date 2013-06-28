@@ -22,55 +22,36 @@ WITHOUT OIDS;
 
 CREATE TABLE dir.tpublicidad (
   id_publicidad SERIAL NOT NULL, 
-  cantidad INTEGER, 
+  cantidad_publicidad INTEGER, 
   tiempo VARCHAR, 
-  puntero INTEGER, 
+  puntero_publicidad INTEGER DEFAULT 0, 
   hora_envio TIME WITHOUT TIME ZONE, 
-  estado VARCHAR, 
+  estado VARCHAR DEFAULT 'registrado'::character varying, 
   id_lugar INTEGER, 
+  id_actividad INTEGER, 
+  id_plantilla_correo INTEGER NOT NULL, 
+  correos_exitos INTEGER DEFAULT 0, 
+  correos_fallidos INTEGER DEFAULT 0, 
   CONSTRAINT pk_tpublicidad__id_publicidad PRIMARY KEY(id_publicidad)
 ) INHERITS (pxp.tbase)
 WITHOUT OIDS;
 
 CREATE TABLE dir.tactividad (
-  id_actividad SERIAL, 
+  id_actividad SERIAL NOT NULL, 
   id_actividad_fk INTEGER, 
   codigo VARCHAR(25), 
-  nombre VARCHAR(500),  
+  nombre VARCHAR(500), 
   codigo_largo VARCHAR(255), 
   CONSTRAINT pk_tactividad__id_actividad PRIMARY KEY(id_actividad)
 ) INHERITS (pxp.tbase)
 WITHOUT OIDS;
-/*
-CREATE TABLE dir.tactividad_gral (
-  id_actividad_gral SERIAL, 
-  nombre VARCHAR, 
-  CONSTRAINT pk_tactividad_gral__id_actividad_gral PRIMARY KEY(id_actividad_gral)
-) INHERITS (pxp.tbase)
-WITHOUT OIDS;
 
-CREATE TABLE dir.tactividad_prim (
-  id_actividad_prim SERIAL, 
-  id_actividad_gral INTEGER, 
-  nombre VARCHAR, 
-  CONSTRAINT pk_tactividad_prim__id_actividad_prim PRIMARY KEY(id_actividad_prim)
-) INHERITS (pxp.tbase)
-WITHOUT OIDS;
-
-CREATE TABLE dir.tactividad_esp (
-  id_actividad_esp SERIAL NOT NULL, 
-  id_actividad_prim INTEGER, 
-  nombre VARCHAR, 
-  CONSTRAINT pk_tactividad_esp__id_actividad_esp PRIMARY KEY(id_actividad_esp)
-) INHERITS (pxp.tbase)
-WITHOUT OIDS;
-*/
 /***********************************F-SCP-GSS-DIR-0-19/06/2013****************************************/
 
 /***********************************I-SCP-GSS-DIR-5-25/06/2013****************************************/
 
 CREATE TABLE dir.tplantilla_correo (
-  id_plantilla_correo SERIAL, 
+  id_plantilla_correo SERIAL NOT NULL, 
   codigo VARCHAR(20) NOT NULL, 
   body TEXT, 
   CONSTRAINT pk_tplantilla_correo__id_plantilla_correo PRIMARY KEY(id_plantilla_correo)
@@ -78,8 +59,8 @@ CREATE TABLE dir.tplantilla_correo (
 WITHOUT OIDS;
 
 CREATE TABLE dir.tarchivo_adjunto (
-  id_archivo_adjunto SERIAL, 
-  id_plantilla_correo INTEGER,
+  id_archivo_adjunto SERIAL NOT NULL, 
+  id_plantilla_correo INTEGER, 
   archivo BYTEA, 
   nombre_archivo VARCHAR(50), 
   extension_archivo VARCHAR(10), 

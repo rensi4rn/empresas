@@ -20,23 +20,9 @@ ALTER TABLE dir.tpublicidad
     ON DELETE NO ACTION
     ON UPDATE NO ACTION
     NOT DEFERRABLE;
-/*    
-ALTER TABLE dir.tactividad_esp
-  ADD CONSTRAINT fk_tactividad_esp__id_actividad_prim FOREIGN KEY (id_actividad_prim)
-    REFERENCES dir.tactividad_prim(id_actividad_prim)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION
-    NOT DEFERRABLE;
-    
-ALTER TABLE dir.tactividad_prim
-  ADD CONSTRAINT fk_tactividad_prim__id_actividad_gral FOREIGN KEY (id_actividad_gral)
-    REFERENCES dir.tactividad_gral(id_actividad_gral)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION
-    NOT DEFERRABLE;
-*/
+
 ALTER TABLE dir.tactividad
-  ADD CONSTRAINT fk_tactividad__id_actividad FOREIGN KEY (id_actividad_fk)
+  ADD CONSTRAINT fk_tactividad__id_actividad_fk FOREIGN KEY (id_actividad_fk)
     REFERENCES dir.tactividad(id_actividad)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION
@@ -54,3 +40,21 @@ ALTER TABLE dir.tarchivo_adjunto
     NOT DEFERRABLE;
     
 /********************************************F-DEP-GSS-DIR-5-24/06/2013********************************************/
+
+/********************************************I-DEP-GSS-DIR-6-27/06/2013********************************************/
+
+ALTER TABLE dir.tpublicidad
+  ADD CONSTRAINT fk_tpublicidad__id_actividad FOREIGN KEY (id_actividad)
+    REFERENCES dir.tactividad(id_actividad)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION
+    NOT DEFERRABLE;
+
+ALTER TABLE dir.tpublicidad
+  ADD CONSTRAINT fk_tpublicidad__id_plantilla_correo FOREIGN KEY (id_plantilla_correo)
+    REFERENCES dir.tplantilla_correo(id_plantilla_correo)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION
+    NOT DEFERRABLE;
+
+/********************************************F-DEP-GSS-DIR-6-27/06/2013********************************************/

@@ -70,7 +70,31 @@ BEGIN
 			return v_consulta;
 						
 		end;
-
+        
+	/*********************************    
+ 	#TRANSACCION:  'DIR_CAMPAR_SEL'
+ 	#DESCRIPCION:	Consulta de datos
+ 	#AUTOR:		admin	
+ 	#FECHA:		26-06-2013 01:10:51
+	***********************************/
+    
+	elsif(p_transaccion='DIR_CAMPAR_SEL')then
+     				
+    	begin
+    		--Sentencia de la consulta
+			v_consulta:='select
+						arcadj.archivo,
+						arcadj.extension_archivo,
+						arcadj.nombre_archivo
+						from dir.tarchivo_adjunto arcadj
+						inner join dir.tpublicidad camp on camp.id_plantilla_correo=arcadj.id_plantilla_correo
+						where camp.id_publicidad='||v_parametros.id_publicidad||'';
+			
+			--Devuelve la respuesta
+			return v_consulta;
+						
+		end;
+    
 	/*********************************    
  	#TRANSACCION:  'DIR_ARCADJ_CONT'
  	#DESCRIPCION:	Conteo de registros

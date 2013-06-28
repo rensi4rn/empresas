@@ -440,23 +440,6 @@ Phx.vista.Empresa=Ext.extend(Phx.gridInterfaz,{
 			this.getComponente('id_actividad_prim').disable();
 			this.getComponente('id_actividad_esp').disable();
 		}
-		/*
-		onButtonEdit : function() {
-			var rec = this.sm.getSelected();
-			if (rec.data.estado == 'borrador') {
-				this.getComponente('id_almacen').enable();
-				this.getComponente('id_usuario_resp').enable();
-				this.getComponente('completo').enable();
-				this.getComponente('fecha_inv_planif').enable();
-				this.getComponente('observaciones').enable();
-			} else {
-				this.getComponente('id_almacen').disable();
-				this.getComponente('id_usuario_resp').disable();
-				this.getComponente('completo').disable();
-				this.getComponente('fecha_inv_planif').disable();
-				this.getComponente('observaciones').disable();
-			}
-		}*/
         
 }
 )
