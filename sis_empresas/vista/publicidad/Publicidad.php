@@ -167,7 +167,7 @@ Phx.vista.Publicidad=Ext.extend(Phx.gridInterfaz,{
           type : 'string'
     },
   		grid:true,
-    form:true
+    form:false
 	 },
 		{
   			config:{
@@ -216,15 +216,30 @@ Phx.vista.Publicidad=Ext.extend(Phx.gridInterfaz,{
   },	
 		{
 			config:{
-				name: 'puntero_publicidad',
-				fieldLabel: 'Puntero',
+				name: 'correos_exitos',
+				fieldLabel: 'Correos Exitosos',
 				allowBlank: true,
 				anchor: '80%',
 				gwidth: 100,
 				maxLength:4
 			},
 			type:'NumberField',
-			filters:{pfiltro:'camp.puntero_publicidad',type:'numeric'},
+			filters:{pfiltro:'camp.correos_exitos',type:'numeric'},
+			id_grupo:1,
+			grid:true,
+			form:false
+		},
+		{
+			config:{
+				name: 'correos_fallidos',
+				fieldLabel: 'Correos Fallidos',
+				allowBlank: true,
+				anchor: '80%',
+				gwidth: 100,
+				maxLength:4
+			},
+			type:'NumberField',
+			filters:{pfiltro:'camp.correos_fallidos',type:'numeric'},
 			id_grupo:1,
 			grid:true,
 			form:false
@@ -338,7 +353,8 @@ Phx.vista.Publicidad=Ext.extend(Phx.gridInterfaz,{
 		{name:'estado', type: 'string'},
 		{name:'id_actividad', type: 'numeric'},
 		{name:'actividad', type: 'string'},
-		{name:'puntero_publicidad', type: 'numeric'},
+		{name:'correos_exitos', type: 'numeric'},
+		{name:'correos_fallidos', type: 'numeric'},
 		{name:'cantidad_publicidad', type: 'numeric'},
 		{name:'id_plantilla_correo', type: 'numeric'},
 		{name:'plantilla_correo', type: 'string'},

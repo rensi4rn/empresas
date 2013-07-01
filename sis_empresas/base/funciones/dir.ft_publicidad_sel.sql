@@ -56,7 +56,8 @@ BEGIN
 						camp.estado,
 						camp.id_actividad,
                         act.nombre as actividad,
-						camp.puntero_publicidad,
+						camp.correos_exitos,
+                    	camp.correos_fallidos,
 						camp.cantidad_publicidad,
 						camp.id_plantilla_correo,
                         plt.codigo as plantilla_correo,
@@ -161,7 +162,7 @@ BEGIN
                     left join dir.tempresa emp on emp.id_actividad=act.id_actividad
                 )select email, nombre
                  from actividades
-                 where email is not null and email!='');
+                 where email like '%@%');
                  
             end if;
               

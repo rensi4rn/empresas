@@ -29,7 +29,8 @@ class MODPublicidad extends MODbase{
 		$this->captura('estado','varchar');
 		$this->captura('id_actividad','int4');
 		$this->captura('actividad','varchar');
-		$this->captura('puntero_publicidad','int4');
+		$this->captura('correos_exitos','int4');
+		$this->captura('correos_fallidos','int4');
 		$this->captura('cantidad_publicidad','int4');
 		$this->captura('id_plantilla_correo','int4');
 		$this->captura('plantilla_correo','varchar');
