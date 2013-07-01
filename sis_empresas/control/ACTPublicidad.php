@@ -52,12 +52,12 @@ class ACTPublicidad extends ACTbase{
 		
 		$mail = new PHPMailer();
 		$mail->IsSMTP();
-		$mail->Host       = "smtp.gmail.com";
-		$mail->Port       = 587;
-		$mail->SMTPAuth   = true;
-		$mail->SMTPSecure = "tls";
-		$mail->Username   = "gonzalo@kplian.com";
-		$mail->Password   = "school.GON00"; 
+		$mail->Host       = $_SESSION['_MAIL_SERVIDOR'];
+		$mail->Port       = $_SESSION['_MAIL_PUERTO'];
+		$mail->SMTPAuth   = $_SESSION['_MAIL_AUTENTIFICACION'];
+		$mail->SMTPSecure = $_SESSION['_SMTPSecure'];
+		$mail->Username   = $_SESSION['_MAIL_USUARIO'];
+		$mail->Password   = $_SESSION['_MAIL_PASSWORD']; 
 		
 		$this->objParam->addParametroConsulta('ordenacion','id_publicidad');
   $this->objParam->addParametroConsulta('dir_ordenacion','ASC');
