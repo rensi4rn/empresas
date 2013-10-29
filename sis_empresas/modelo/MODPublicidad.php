@@ -181,6 +181,8 @@ class MODPublicidad extends MODbase{
 		$this->setParametro('id_publicidad','id_publicidad','int4');
 		$this->setParametro('correos_exitos','correos_exitos','int4');
 		$this->setParametro('correos_fallidos','correos_fallidos','int4');
+		$this->setParametro('puntero_mail','puntero_mail','int4');
+		
 		
 		//Ejecuta la instruccion
 		$this->armarConsulta();

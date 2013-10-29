@@ -1,3 +1,5 @@
+--------------- SQL ---------------
+
 CREATE OR REPLACE FUNCTION dir.ft_publicidad_ime (
   p_administrador integer,
   p_id_usuario integer,
@@ -140,14 +142,14 @@ BEGIN
 	elsif(p_transaccion='DIR_AVACAMP_MOD')then
 
 		begin
-        	select cantidad_publicidad into v_cantidad_inc
+        	/*select cantidad_publicidad into v_cantidad_inc
             from dir.tpublicidad 
-            where id_publicidad=v_parametros.id_publicidad;
+            where id_publicidad=v_parametros.id_publicidad;*/
         
 			--Sentencia de la modificacion
 			update dir.tpublicidad set
 			estado = 'en proceso',
-			puntero_publicidad = puntero_publicidad+1,
+			puntero_publicidad = puntero_publicidad+v_parametros.puntero_mail,
 			fecha_ult_envio = now(),
             correos_exitos = correos_exitos+v_parametros.correos_exitos,
             correos_fallidos = correos_fallidos+v_parametros.correos_fallidos

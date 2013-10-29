@@ -60,17 +60,19 @@ class ACTPublicidad extends ACTbase{
 		$mail->Password   = $_SESSION['_MAIL_PASSWORD']; 
 		
 		$this->objParam->addParametroConsulta('ordenacion','id_publicidad');
-  $this->objParam->addParametroConsulta('dir_ordenacion','ASC');
-  $this->objParam->addParametroConsulta('cantidad',1000);
-  $this->objParam->addParametroConsulta('puntero',0);
+        $this->objParam->addParametroConsulta('dir_ordenacion','ASC');
+        $this->objParam->addParametroConsulta('cantidad',1);
+        $this->objParam->addParametroConsulta('puntero',0);
 		
 		//recupero los datos de la campaña y de la plantilla
 		$this->objFunc=$this->create('MODPublicidad');	
 		$this->res=$this->objFunc->listarPublicidadElegida($this->objParam);		
 		$publicidad=$this->res->getDatos();
 		
-		//añado el cuerpo del email
-		$mail->MsgHTML($publicidad[0]['body']);
+		
+		
+		
+		
 		//añado remitente
 		$mail->SetFrom($publicidad[0]['remitente_email'], $publicidad[0]['remitente_nombre']);
 		//añado asunto
@@ -84,6 +86,14 @@ class ACTPublicidad extends ACTbase{
 		$interval = ($end - $start)/3600;		
 		
 		if($interval>$tiempo){
+		             $fpp = fopen('log_correo.txt',"a+");
+                     $dt = new DateTime();
+                     $time = $dt->format('Y-m-d H:i:s');
+                     fwrite($fpp, "\n Inicio: ".$time);
+                     fclose($fpp);
+		            
+		        
+		    
 					//parametrizo cuantos registros voy a recuperar y desde donde		
 					$this->objParam->addParametroConsulta('ordenacion','nombre');
 					$this->objParam->addParametroConsulta('cantidad',$publicidad[0]['cantidad_publicidad']);		
@@ -95,8 +105,8 @@ class ACTPublicidad extends ACTbase{
 					
 					if(count($this->res->getDatos()!=0)){												
 								$this->objParam->addParametroConsulta('ordenacion','id_publicidad');
-							 $this->objParam->addParametroConsulta('cantidad',1000);
-				 			$this->objParam->addParametroConsulta('puntero',0);
+							    $this->objParam->addParametroConsulta('cantidad',1000);
+				 			    $this->objParam->addParametroConsulta('puntero',0);
 								//recupero los archivos adjuntos
 								$this->objFunc=$this->create('MODArchivoAdjunto');
 								$this->res=$this->objFunc->listarArchivoAdjuntoCampania($this->objParam);
@@ -105,45 +115,73 @@ class ACTPublicidad extends ACTbase{
 										//añado los archivos adjuntos
 										$mail->AddAttachment(dirname(__FILE__).'/../archivos/'.$adjuntos['archivo']);
 								}
-								
+								$puntero = 0;
+								$fpp = fopen('log_correo.txt',"a+");
+                                 $dt = new DateTime();
+                                 $time = $dt->format('Y-m-d H:i:s');
+                                 fwrite($fpp, "\n consulta: ".$time);
+                                 fclose($fpp);
 								foreach ($listaCorreos->getDatos() as $destino) {
-									 
+								       
+									    $log='';
 										//verifico si el email existe o no
+										/*
 										$error = validateEmail($destino['email'], true, true, 'admin@kplian.com', 'kplian.com', true);
-								    if ($error) {
-								    				$this->correosFallidos++;
-								        echo "Esta direccion de correo no existe";
-													   //continue;
-								    } else {								    	
-																$this->correosExitos++;
-								        echo "Esta direccion de correo existe";																
-								    }
-										//añado email de destino																	
-									 $mail->AddAddress($destino['email'], $destino['nombre']);	
+    								    if ($error) {
+    								    				$this->correosFallidos++;
+    								        $log.="Esta direccion de correo no existe\n";
+    													   //continue;
+    								    } else {								    	
+    										 $this->correosExitos++;
+    								         $log.= "Esta direccion de correo existe\n";																
+    								    }
+    								    */
+										//añado email de destino
+										$firma = ' </br></br><img src="http://gema.kplian.com/firma.php?email='.urlencode($destino['email']).'" />';
+        
+										$html = $publicidad[0]['body'].$firma;
+                                        //añado el cuerpo del email
+                                        $mail->MsgHTML($html);																	
+									    $mail->AddAddress($destino['email'], $destino['nombre']);	
 										
 										if(!$mail->Send()) {						
-													echo "Mailer Error: " . $mail->ErrorInfo;
-											}else {
-												 //hago que avance el puntero									 
-													$this->objParam->addParametro('correos_exitos',$this->correosExitos);
-													$this->objParam->addParametro('correos_fallidos',$this->correosFallidos);
-											  $this->objFunc=$this->create('MODPublicidad');											
-													$this->res=$this->objFunc->avanzarPuntero($this->objParam);
-													echo "Correos enviados!";
-											}
-											$mail->ClearAddresses();
-											$this->correosExitos=0;
-											$this->correosFallidos=0;			
+											$log.= "Mailer Error: " . $mail->ErrorInfo."\n";
+										}
+										else {
+											 
+										}
+									     $mail->ClearAddresses();
+									      $log.= "Correos enviados! ".$destino['email'];
+									     
+									     $fpp = fopen('log_correo.txt',"a+");
+									     $dt = new DateTime();
+                                         $time = $dt->format('Y-m-d H:i:s');
+                                        
+                                         fwrite($fpp, "\n Nombre: $log"." ".$time);
+                                         fclose($fpp);
+										 $this->correosExitos=0;
+										 $this->correosFallidos=0;	
+										 $mail->SmtpClose();
+										 $puntero=$puntero+1;;		
 								}	
-								$mail->SmtpClose();
+								
+								
+								//hago que avance el puntero                                     
+                                $this->objParam->addParametro('correos_exitos',$this->correosExitos);
+                                $this->objParam->addParametro('correos_fallidos',$this->correosFallidos);
+                                $this->objParam->addParametro('puntero_mail',$puntero);
+                                $this->objFunc=$this->create('MODPublicidad');                                          
+                                $this->res=$this->objFunc->avanzarPuntero($this->objParam);
+                               
 					 }
 					$this->res->imprimirRespuesta($this->res->generarJson());
-			}else{
-						$mensaje = new Mensaje();
-      $mensaje->setMensaje('ADVERTENCIA','ACTPublicidad.php','No transcurrio el periodo de envio de correos electronicos',
+			}
+			else{
+			    $mensaje = new Mensaje();
+                $mensaje->setMensaje('ADVERTENCIA','ACTPublicidad.php','No transcurrio el periodo de envio de correos electronicos',
                                       'No paso el intervalo necesario para volver a enviar correos','control');
-      $this->res = $mensaje;
-      $this->res->imprimirRespuesta($this->res->generarJson());
+                $this->res = $mensaje;
+                $this->res->imprimirRespuesta($this->res->generarJson());
 			}
 	}		
 }

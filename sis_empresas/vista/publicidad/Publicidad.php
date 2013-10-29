@@ -151,23 +151,23 @@ Phx.vista.Publicidad=Ext.extend(Phx.gridInterfaz,{
 	       name:'lugar',
 	       fieldLabel: 'Lugar',
 	       emptyText : 'Lugar...',
-				    allowBlank: true,
-							 typeAhead: true,
+		   allowBlank: true,
+		   typeAhead: true,
 	       triggerAction: 'all',
 	       anchor: '80%',
-  		    lazyRender:true,
-  		    mode: 'local',
-  		    store:['Beni', 'Chuquisaca', 'Cochabamba', 'La Paz', 'Oruro', 
+  		   lazyRender:true,
+  		   mode: 'local',
+  		   store:['Beni', 'Chuquisaca', 'Cochabamba', 'La Paz', 'Oruro', 
   		    							'Pando', 'Potosi', 'Santa Cruz', 'Tarija']
   		},
   		type:'ComboBox',
   		id_grupo:0,
   		filters : {
-          pfiltro : 'lug.nombre',
-          type : 'string'
+        pfiltro : 'lug.nombre',
+        type : 'string'
     },
   		grid:true,
-    form:false
+        form:true
 	 },
 		{
   			config:{
